@@ -1,4 +1,5 @@
 # coding=utf-8
+import base64
 import os
 path1 = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 import sys
@@ -16,11 +17,13 @@ class SendEmail():
         self.email_host = email_host
         self.send_name = send_name
         self.email_frame = MIMEMultipart()
+        self.send_user = "飘飘落叶" + " "  + "<" +"1316469308@qq.com" +">"
     def email_message(self):
-        self.send_user = "飘飘落叶" + "<" +"1316469308@qq.com" +">"
+        name64str = str(base64.b64encode(bytes("飘飘落叶", 'utf-8')),'utf-8')
+        fromnamestr = '"=?utf-8?B?' + name64str + '=?=" <' + "1316469308@qq.com" + ">"
         self.receive_list = Configuration().get_Receive_Email()
         sub = '接口自动化测试报告'
-        self.email_frame['From'] = self.send_user
+        self.email_frame['From'] = fromnamestr
         self.email_frame['To'] = ";".join(self.receive_list)
         self.email_frame['Subject'] = sub
     def email_content(self,pass_list,fail_list,total_time):

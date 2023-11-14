@@ -34,21 +34,7 @@ class Requests():
         return res
 
 if __name__ == '__main__':
-#     url = 'https://www.hunliji.com/p/wedding/index.php/home/APIMerchant/KeeperAppointment'
-#     data = '{
-#  "phone": "18458160876",
-#  "source": 0,
-#  "channel": 1114,
-#  "remark": "新人在找主持：「婚期：2021-06-01」+「预算：1000以下」+「主持风格：浪漫温情」"
-# }'
-#     # data = json.dumps(data)
-#     header = {
-#         "Content-Type":"application/json"
-#     }
-    # message = '阿欢测试飞书消息3'
-
-    # res = Requests().feishu_message(message)
-    url = "https://api.hunliji.com/hms/hljUser/appApi/user"
+    url = "https://open.jiehun.com.cn/search/entry/hot/v1"
     data = '{"nick":"看星星01"}'
     # data = json.dumps(data)
     header = {

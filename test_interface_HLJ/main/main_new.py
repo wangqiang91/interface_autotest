@@ -1,4 +1,5 @@
 # coding=utf-8
+import datetime
 import sys
 import os
 path1 = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -7,13 +8,13 @@ import time
 from utils.operate_email import SendEmail
 from utils.operate_request import Requests
 from get_data.get_case_data import Get_Case_Data
-
+from utils.operate_mysql import OperateMysql
 class Main():
     def __init__(self):
         self.getdata = Get_Case_Data()
         self.request = Requests()
         self.sendemail = SendEmail()
-
+        self.operatemysql = OperateMysql()
     def while_case_success(self,row,res):
         self.getdata.write_data_toispass(row, 'PASS')
         self.getdata.write_data_dotime(row)
@@ -47,6 +48,7 @@ class Main():
         start_time = time.time()
         for row in range(1, casenum):
             caseid = self.getdata.get_caseid(row)
+            casename = self.getdata.get_case_name(row)
             isgo = self.getdata.get_isgo(row)
             url = self.getdata.get_url(row)
             method = self.getdata.get_method(row)
@@ -55,29 +57,37 @@ class Main():
             expect = self.getdata.get_expect(row)
             min_length = self.getdata.get_min_length(row)
             relyid = self.getdata.get_row_from_relyid(row)
+
             if isgo == 'Y':
                 try:
                     if relyid:
                         data = self.getdata.get_newdata(row)
                     res = self.request.port(url, method, data, header)
+                    insert_list = [caseid,casename,url,method,str(header),data,expect,min_length,str(datetime.datetime.now()),str(res.elapsed.total_seconds())]
                     res1 = str(res.json())
-                    print(res1)
-                    res2 = res.text
-                    if (expect in res1) and (res.status_code == 200) and (len(res2) >= min_length):
+                    # print(res1)
+                    res_text = res.text
+                    if (expect in res1) and (res.status_code == 200) and (len(res_text) >= min_length):
                         self.while_case_success(row,res)
                         pass_list.append(caseid)
+                        # print(insert_list)
+                        self.operatemysql.insert_data(insert_list + [1,""])
                     else:
                         self.while_case_fail(row)
                         fail_list.append(caseid)
-                except:
+                        self.operatemysql.insert_data(insert_list + [0,res_text])
+                except Exception as e:
                     self.other_fail(row)
                     fail_list.append(caseid)
+                    self.operatemysql.insert_data(insert_list + [0,e])
+                    print(e)
             else:
                 self.getdata.write_data_toispass(row, "")
         end_time = time.time()
         # self.sendemail.email_main(pass_list, fail_list, all_time)  # 发送邮件
         # self.request.feishu_message(response)  # 飞书发送消息
         self.statistical_data(start_time,end_time,pass_list,fail_list)
+        self.operatemysql.close()
         
 
 if __name__ == '__main__':

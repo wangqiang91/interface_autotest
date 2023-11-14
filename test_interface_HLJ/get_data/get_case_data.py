@@ -33,6 +33,10 @@ class Get_Case_Data():
         col = self.caseid
         value = self.opera_excel.get_cell_value(row,col)
         return value
+    def get_case_name(self,row):
+        col = self.casename
+        value = self.opera_excel.get_cell_value(row,col)
+        return value
     def get_isgo(self,row):
         col = self.isgo
         value = self.opera_excel.get_cell_value(row,col)
@@ -128,6 +132,6 @@ class Get_Case_Data():
 
 
 if __name__ == '__main__':
-    test = Get_Case_Data().get_caseid(3)
-    print(type(test))
+    test = Get_Case_Data().get_min_length(3)
+    print(test)
     

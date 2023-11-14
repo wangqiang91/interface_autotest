@@ -59,7 +59,7 @@ class Main():
         fail_num = len(fail_list)
         count_num = pass_num + fail_num
         pass_rate = "%.2f%%" %(pass_num/count_num*100)      
-        self.sendemail.email_main(pass_list,fail_list,all_time)    #发送邮件
+        # self.sendemail.email_main(pass_list,fail_list,all_time)    #发送邮件
         response = '本次测试执行了%f秒,共运行%d个接口，成功%d个，失败%d，通过率为%s!' %(all_time,count_num,pass_num,fail_num,pass_rate)
         # self.request.feishu_message(response)   #飞书发送消息
         print(response)
