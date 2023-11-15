@@ -1,12 +1,11 @@
 # coding=utf-8
 import base64
 import os
+import time
 path1 = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 import sys
 sys.path.append(path1)
 from utils.configuration import Configuration
-case_excel = Configuration().get_Excel_Name()
-path3 = os.path.join(path1,'test_case',case_excel)
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -35,11 +34,22 @@ class SendEmail():
         email_content = MIMEText(content,_subtype='plain',_charset='utf-8')
         self.email_frame.attach(email_content)
     def email_accessory(self):
-        accessory = path3
-        add_accessory = MIMEApplication(open(accessory,'rb').read())
-        add_accessory["Content-Type"] = 'application/octet-stream'
-        add_accessory["Content-Disposition"] = 'attachment; filename="interfaceTestReport.xls"'
-        self.email_frame.attach(add_accessory)
+        try:
+            case_excel = Configuration().get_Excel_Name()
+            accessory01 = os.path.join(path1,'test_case',case_excel)
+            with open(accessory01,'rb') as as1:
+                add_accessory = MIMEApplication(as1.read())
+                add_accessory["Content-Type"] = 'application/octet-stream'
+                add_accessory["Content-Disposition"] = 'attachment; filename="interfaceTestReport.xls"'
+                self.email_frame.attach(add_accessory)
+            accessory02 = os.path.join(path1,'logs','%s.log'%time.strftime('%Y_%m_%d'))
+            with open(accessory02,"rb") as as2:
+                attachment2 = MIMEApplication(as2.read(), _subtype='txt')
+                attachment2.add_header('Content-Disposition', 'attachment', filename=f'{time.strftime("%Y_%m_%d")}.txt')
+                self.email_frame.attach(attachment2)
+        except:
+            print("添加附件异常")
+        
     def email_server(self):
         server = smtplib.SMTP()
         server.connect(self.email_host)

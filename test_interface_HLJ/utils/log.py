@@ -23,10 +23,10 @@ class Log():
         self.logger.addHandler(fh)
         
         # 创建一个StreamHandler,用于输出到控制台
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
-        ch.setFormatter(self.formatter)
-        self.logger.addHandler(ch)
+        # ch = logging.StreamHandler()
+        # ch.setLevel(logging.DEBUG)
+        # ch.setFormatter(self.formatter)
+        # self.logger.addHandler(ch)
         
         if level == 'info':
             self.logger.info(message)
@@ -37,7 +37,7 @@ class Log():
         elif level == 'error':
             self.logger.error(message)
         # 这两行代码是为了避免日志输出重复问题
-        self.logger.removeHandler(ch)
+        # self.logger.removeHandler(ch)
         self.logger.removeHandler(fh)
         # 关闭打开的文件
         fh.close()
