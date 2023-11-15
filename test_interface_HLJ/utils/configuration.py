@@ -1,4 +1,3 @@
-from fileinput import close
 import json
 import os
 path1 = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))

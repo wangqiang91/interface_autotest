@@ -1,7 +1,10 @@
 # coding=utf-8
+import os,sys
+path1 = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(path1)
 import requests
 import json
-
+from utils.log import Log
 class Requests():
     def port(self,url,method,data,header=None,time_out=3):
         if method == 'get':
@@ -34,14 +37,17 @@ class Requests():
         return res
 
 if __name__ == '__main__':
-    url = "https://open.jiehun.com.cn/search/entry/hot/v1"
-    data = '{"nick":"看星星01"}'
-    # data = json.dumps(data)
+    url = "https://open.jiehun.com.cn/search/entry/list"
+    data = {"clientType": "1","pageId": "9999"}
+    data = json.dumps(data)
     header = {
+        'User-Agent':'Mozilla/5.0',
         "Content-Type":"application/json",
-        "phone":"c81cf4c35e52b236d4b719f258946c0c1eb00b88",
-        "token":"1ee57318edef141e32a7599cc17084cb",
+        # "token":"626ac3b97c8d97b3f8055881edbb85a2",
+        "city-id":"330100"
     }
-    res = Requests().port(url,'put',data,header)
+    res = Requests().port(url,'post',data,header)
+    Log().info("请求接口参数：\n" + url + "\n" + data + "\n" + str(header))
+    Log().info(res.text)
     print(res.json())
 

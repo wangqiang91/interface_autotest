@@ -31,7 +31,7 @@ class SendEmail():
         fail_num = len(fail_list)
         count_num = pass_num + fail_num
         pass_rate = "%.2f%%" %(pass_num/count_num*100)
-        content = '本次测试执行了%f秒，共运行%d个接口，成功%d个，失败%d，通过率为%s!' %(total_time,count_num,pass_num,fail_num,pass_rate)
+        content = f'本次测试执行了{total_time}秒，共运行{count_num}个接口，成功{pass_num}个，失败{fail_num}，通过率为{pass_rate}!运行失败的测试用例：{fail_list}'
         email_content = MIMEText(content,_subtype='plain',_charset='utf-8')
         self.email_frame.attach(email_content)
     def email_accessory(self):
