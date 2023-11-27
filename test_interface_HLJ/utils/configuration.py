@@ -6,7 +6,7 @@ path1 = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 class Configuration():
     def __init__(self):
         self.config = configparser.ConfigParser()
-        self.config.read(path1 + r"\test_case\test.conf",encoding="utf-8")
+        self.config.read(path1 + r"/test_case/test.conf",encoding="utf-8")
     def get_Excel_Name(self):
         return self.config.get('run_test_case_file','fileName')
     def get_Receive_Email(self):

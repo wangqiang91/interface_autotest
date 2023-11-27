@@ -51,8 +51,11 @@ class SendEmail():
             print("添加附件异常")
         
     def email_server(self):
-        server = smtplib.SMTP()
-        server.connect(self.email_host)
+        # 使用阿里云服务器，默认25端口被封禁，只能通过加密的465端口发送邮件；
+        # server = smtplib.SMTP()
+        # server.connect(self.email_host)
+        server = smtplib.SMTP_SSL("smtp.qq.com",465)
+        server.ehlo()
         server.login(self.send_name,'buhdpheoqahihdje')
         server.sendmail(self.send_user,self.receive_list,self.email_frame.as_string())
         server.close()

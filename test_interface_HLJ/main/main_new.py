@@ -58,13 +58,13 @@ class Main():
             expect = self.getdata.get_expect(row)
             min_length = self.getdata.get_min_length(row)
             relyid = self.getdata.get_row_from_relyid(row)
-
+            insert_list = [caseid,casename,url,method,str(header),data,expect,min_length,str(datetime.datetime.now())]
             if isgo == 'Y':
                 try:
                     if relyid:
                         data = self.getdata.get_newdata(row)
                     res = self.request.port(url, method, data, header)
-                    insert_list = [caseid,casename,url,method,str(header),data,expect,min_length,str(datetime.datetime.now()),str(res.elapsed.total_seconds())]
+                    insert_list.append(str(res.elapsed.total_seconds()))
                     res_str = str(res.json())
                     # print(res1)
                     res_text = res.text
@@ -84,7 +84,7 @@ class Main():
                     self.log.error(e)
                     self.other_fail(row)
                     fail_list.append(caseid)
-                    self.operatemysql.insert_data(insert_list + [0,e])
+                    self.operatemysql.insert_data(insert_list + ["",0,e])
                     print(e)
             else:
                 self.getdata.write_data_toispass(row, "")

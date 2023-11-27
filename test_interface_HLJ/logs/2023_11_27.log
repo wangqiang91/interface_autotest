@@ -1,0 +1,10 @@
+[2023-11-27 10:58:09,942] - log.py] - INFO: 请求接口参数：
+https://api.hunliji.com/hms/contentDataPort/appApi/work/makeup/list?entrance=2&markId=0&pageNum=1&pageSize=20
+{}
+{'cid': '7822', 'token': '626ac3b97c8d97b3f8055881edbb85a2'}
+[2023-11-27 10:58:09,942] - log.py] - ERROR: {'status': {'retCode': 0, 'msg': '成功'}, 'data': {'totalCount': 0, 'pageCount': 0, 'perPage': 0, 'page': 0, 'pageSize': 0, 'hasNext': False, 'list': []}, 'currentTime': 1701053889946}
+[2023-11-27 10:58:10,699] - log.py] - INFO: 请求接口参数：
+https://api.hunliji.com/hms/contentDataPort/appApi/work/makeup/freeMakeupTry/list?latitude=30.28807237413194&locationArea=%E8%A5%BF%E6%B9%96%E5%8C%BA&locationCity=%E6%9D%AD%E5%B7%9E%E5%B8%82&locationProvince=%E6%B5%99%E6%B1%9F%E7%9C%81&longitude=120.1123497178819&pageNum=1&pageSize=20&sortFactor=complex
+{}
+{'cid': '78', 'token': '626ac3b97c8d97b3f8055881edbb85a2'}
+[2023-11-27 10:58:10,699] - log.py] - ERROR: {'status': {'retCode': 0, 'msg': '成功'}, 'data': {'totalCount': 0, 'pageCount': 1, 'perPage': 0, 'page': 0, 'pageSize': 0, 'hasNext': False, 'list': [{'id': 120421, 'storeSeqId': '29721087200624640', 'name': 'ANQI安琪新娘造型', 'isGroup': True, 'des': '团队成员5人', 'position': 0, 'logo': 'https://qnm.hunliji.com/Fjhg47aH45KdfyG0n4eUnX_craJH', 'minPrice': 2280, 'latitude': 30.279199, 'longitude': 120.180351, 'area': '拱墅区', 'grade': 2, 'makeupType': 'allDayMakeup', 'reserveNum': 2, 'work': {'id': 2727543, 'seqId': '29826342741049352', 'coverPath': 'https://qnm.hunliji.com/Fv9DgE5BwRHvmddBUNlSQEMb5w20'}, 'userId': 2897268}]}, 'currentTime': 1701053890761}
